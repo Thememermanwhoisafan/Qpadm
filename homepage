@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qpAdm Analysis - Professional Ancestry Analysis Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6366f1;
+        }
+
+        .contact-btn {
+            background: #6366f1;
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: #5856eb;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dna" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dna)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #6366f1;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* Supported Files Section */
+        .supported-files {
+            padding: 60px 0;
+            background: #f8fafc;
+        }
+
+        .supported-files h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #1e293b;
+        }
+
+        .file-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .file-type {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .file-type:hover {
+            transform: translateY(-5px);
+        }
+
+        .file-type h3 {
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-type p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 0;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.free::before {
+            content: 'Free';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: #10b981;
+            color: white;
+            padding: 5px 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .pricing-card.featured .plan-features li::before {
+            color: #fbbf24;
+        }
+
+        .plan-btn {
+            background: #6366f1;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .pricing-card.featured .plan-btn {
+            background: white;
+            color: #6366f1;
+        }
+
+        .pricing-card.free .plan-btn {
+            background: #10b981;
+        }
+
+        .plan-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #1e293b, #475569);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">qpAdm Analysis</div>
+                <ul class="nav-links">
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#supported-files">File Types</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="mailto:contact@qpadmanalysis.com" class="contact-btn">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Professional qpAdm Analysis Service</h1>
+                <p>Upload your raw DNA files and get detailed ancestry analysis using advanced qpAdm algorithms. Fast, accurate, and affordable.</p>
+                <div class="hero-buttons">
+                    <a href="#pricing" class="btn-primary">Get Analysis - £5</a>
+                    <a href="#supported-files" class="btn-secondary">Supported Files</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="supported-files" class="supported-files">
+        <div class="container">
+            <h2>Supported File Types</h2>
+            <div class="file-types">
+                <div class="file-type">
+                    <h3>23andMe</h3>
+                    <p>Raw data download files</p>
+                </div>
+                <div class="file-type">
+                    <h3>AncestryDNA</h3>
+                    <p>Raw DNA data files</p>
+                </div>
+                <div class="file-type">
+                    <h3>MyHeritage</h3>
+                    <p>Raw DNA files</p>
+                </div>
+                <div class="file-type">
+                    <h3>FamilyTreeDNA</h3>
+                    <p>Raw data exports</p>
+                </div>
+                <div class="file-type">
+                    <h3>Living DNA</h3>
+                    <p>Raw data files</p>
+                </div>
+                <div class="file-type">
+                    <h3>Other Formats</h3>
+                    <p>VCF, PLINK, EIGENSTRAT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Simple, Affordable Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card free">
+                    <div class="plan-name">Basic Analysis</div>
+                    <div class="plan-price">FREE</div>
+                    <div class="plan-period">With qpAdm purchase</div>
+                    <ul class="plan-features">
+                        <li>Y-DNA haplogroup analysis</li>
+                        <li>mtDNA haplogroup analysis</li>
+                        <li>Basic ancestry breakdown</li>
+                        <li>Digital report</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="mailto:contact@qpadmanalysis.com?subject=Free Analysis Request" class="plan-btn">Request Free Analysis</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="plan-name">qpAdm Analysis</div>
+                    <div class="plan-price">£5</div>
+                    <div class="plan-period">$7 USD per run</div>
+                    <ul class="plan-features">
+                        <li>Full qpAdm analysis</li>
+                        <li>Population admixture modeling</li>
+                        <li>Ancient DNA comparisons</li>
+                        <li>Detailed statistical report</li>
+                        <li>Custom population models</li>
+                        <li>Expert interpretation</li>
+                        <li>Fast 24-48hr turnaround</li>
+                    </ul>
+                    <a href="mailto:contact@qpadmanalysis.com?subject=qpAdm Analysis Order" class="plan-btn">Order Analysis</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Send Your Files</h3>
+                    <p>Email your raw DNA files from 23andMe, AncestryDNA, or other providers. All major formats supported.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Payment & Processing</h3>
+                    <p>Pay £5 via PayPal or bank transfer. I'll run your data through professional qpAdm software.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Expert Analysis</h3>
+                    <p>Your data is analyzed using advanced population genetics algorithms with ancient DNA references.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Get Results</h3>
+                    <p>Receive detailed results within 24-48 hours, including statistical data and expert interpretation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Why Choose My Service?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎓</span>
+                    <h3>Expert Analysis</h3>
+                    <p>Professionally trained in population genetics with years of experience running qpAdm analyses.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Fast Turnaround</h3>
+                    <p>Get your results within 24-48 hours, not weeks like commercial companies.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💰</span>
+                    <h3>Affordable Pricing</h3>
+                    <p>Professional analysis for just £5 - fraction of the cost of commercial alternatives.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔬</span>
+                    <h3>Research Quality</h3>
+                    <p>Same software and methods used in peer-reviewed scientific publications.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔒</span>
+                    <h3>Privacy Guaranteed</h3>
+                    <p>Your files are deleted after analysis. No data retention or sharing with third parties.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Detailed Reports</h3>
+                    <p>Comprehensive results with statistical significance, charts, and expert interpretation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Discover Your Ancient Origins?</h2>
+            <p>Professional qpAdm analysis for just £5 - contact me today to get started</p>
+            <a href="mailto:contact@qpadmanalysis.com?subject=Analysis Request" class="btn-primary">Contact Me Now</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:contact@qpadmanalysis.com">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <p>&copy; 2025 qpAdm Analysis Service. Professional ancestry analysis since 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add floating animation to feature icons
+        document.querySelectorAll('.feature-icon').forEach(icon => {
+            icon.classList.add('floating');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
